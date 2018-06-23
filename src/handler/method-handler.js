@@ -7,7 +7,7 @@ const {
   AFTER_METADATA,
   MESSAGE_METADATA,
   IGNORE_JWT_METADATA } = require('../constants');
-const RequestMethod = require('../enums/request-method');
+const RequestMethod = require('../enum/request-method');
 
 const createMappingDecorator = Symbol('createMappingDecorator');
 const createSingleDecorator = Symbol('createSingleDecorator');
@@ -22,8 +22,8 @@ class MethodHandler {
   getMetada (targetCb) {
     const reqMethod = Reflect.getMetadata(METHOD_METADATA, targetCb);
     const path = Reflect.getMetadata(PATH_METADATA, targetCb);
-    const before = Reflect.getMetadata(BEFORE_METADATA, targetCb);
-    const after = Reflect.getMetadata(AFTER_METADATA, targetCb);
+    const before = Reflect.getMetadata(BEFORE_METADATA, targetCb) || [];
+    const after = Reflect.getMetadata(AFTER_METADATA, targetCb) || [];
     const message = Reflect.getMetadata(MESSAGE_METADATA, targetCb);
     const ignoreJwt = Reflect.getMetadata(IGNORE_JWT_METADATA, targetCb);
     return {

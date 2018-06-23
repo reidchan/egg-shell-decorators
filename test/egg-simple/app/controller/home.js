@@ -1,4 +1,6 @@
 'use strict';
+
+const { Controller } = require('egg');
 const { Get, IgnoreJwtAll, Before, After, BeforeAll, AfterAll } = require('egg-shell');
 
 const Before1 = require('egg-shell/test/middlewares/before-1');
@@ -10,8 +12,6 @@ const After1 = require('egg-shell/test/middlewares/after-1');
 const After2 = require('egg-shell/test/middlewares/after-2');
 const After3 = require('egg-shell/test/middlewares/after-3');
 const After4 = require('egg-shell/test/middlewares/after-4');
-
-const Controller = require('egg').Controller;
 
 @IgnoreJwtAll
 @BeforeAll([ Before1, Before2 ])

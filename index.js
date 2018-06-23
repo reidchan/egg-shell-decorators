@@ -3,6 +3,7 @@
 require('reflect-metadata');
 const _ = require('lodash');
 
+const StatusError = require('./src/exception/status-error');
 const ControllerHandler = require('./src/handler/controller-handler');
 const MethodHandler = require('./src/handler/method-handler');
 
@@ -35,25 +36,26 @@ const EggShell = (app, options) => {
       const { reqMethod, path, before, after, message, ignoreJwt } = methodHandler.getMetada(c[pName]);
       const befores = [ ...beforeAll, ...before ];
       const afters = [ ...afterAll, ...after ];
-      const routerCb = async (ctx) => {
+      const routerCb = async ctx => {
         const instance = new c.constructor(ctx);
         for (const before of befores) {
           await before(ctx, instance);
         }
         try {
-          const result = await instance[pName](ctx.request.body);
-          if (options.quick) {
+          const result = await instance[pName](ctx);
+          if (options.quickStart) {
             ctx.response.body = {
               success: true,
               message,
-              data: result
+              data: result,
             };
           }
         } catch (error) {
-          if (options.quick) {
+          if (options.quickStart) {
+            ctx.response.status = error.status || 500;
             ctx.response.body = {
               success: false,
-              message: error.message
+              message: error.message,
             };
           }
         }
@@ -73,6 +75,7 @@ const EggShell = (app, options) => {
 
 module.exports = {
   EggShell,
+  StatusError,
 
   Get: methodHandler.get(),
   Post: methodHandler.post(),
@@ -90,5 +93,5 @@ module.exports = {
   IgnoreJwtAll: ctHandler.ignoreJwtAll(),
   BeforeAll: ctHandler.beforeAll(),
   AfterAll: ctHandler.afterAll(),
-  Prefix: ctHandler.prefix()
+  Prefix: ctHandler.prefix(),
 };

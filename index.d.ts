@@ -2,6 +2,13 @@ interface EggShell {
   (app: object, options: object): void
 }
 
+declare class StatusError {
+  constructor(message: string, status?: number);
+
+  message: string;
+  status: number;
+}
+
 interface Decorator {
   (target: any, key: string, descriptor: PropertyDescriptor): void
 }
@@ -11,6 +18,7 @@ interface ValueDecorator {
 }
 
 export const EggShell: EggShell
+export const StatusError: StatusError
 
 export const Get: ValueDecorator
 export const Post: ValueDecorator
