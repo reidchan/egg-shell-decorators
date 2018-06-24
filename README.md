@@ -85,7 +85,7 @@ require('babel-register')({
 ```typescript
 // app/controller/user
 import { Controller } from 'egg';
-import { Get, Message } from 'egg-shell-decorators';
+import { Get, Message, Prefix } from 'egg-shell-decorators';
 
 @Prefix('/super2god')
 export default class UserController extends Controller {
