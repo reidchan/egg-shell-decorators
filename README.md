@@ -79,6 +79,26 @@ require('babel-register')({
   - [x] Message
   - [x] IgnoreJwt
   - [x] IgnoreJwtAll
+  
+## Prefix
+如果你不喜欢`路由解析`给你的路径，那么你可以自定义解析的路径：
+```typescript
+// app/controller/user
+import { Controller } from 'egg';
+import { Get, Message } from 'egg-shell-decorators';
+
+@Prefix('/super2god')
+export default class UserController extends Controller {
+
+  @Get('/detail/:id')
+  @Message('so great !')
+  public async get({ params: { id } }) {
+    return await this.service.user.getById(id)
+  }
+
+}
+```
+这样解析出来的路由就是：`全局前缀 + /super2god/detail/:id`，而不是`全局前缀 + /user/detail/:id`
 
 ## QuickStart
 在 EggShell 里配置 `quickStart` 为 true 即可开启 QuickStart 模式，QuickStart 模式会自动处理响应体：
