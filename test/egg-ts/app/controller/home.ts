@@ -19,7 +19,7 @@ export default class HomeController extends Controller {
   @Before([ Before3, Before4 ])
   @After([ After3, After4 ])
   @Get('/')
-  public async index() {
+  public index() {
     return 'hi, egg';
   }
 

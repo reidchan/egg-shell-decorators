@@ -1,7 +1,7 @@
 'use strict';
 
 const { Controller } = require('egg');
-const { Get, IgnoreJwtAll, Before, After, BeforeAll, AfterAll } = require('egg-shell');
+const { Get, Before, After, BeforeAll, AfterAll, IgnoreJwtAll } = require('egg-shell');
 
 const Before1 = require('egg-shell/test/middlewares/before-1');
 const Before2 = require('egg-shell/test/middlewares/before-2');
@@ -21,7 +21,7 @@ class HomeController extends Controller {
   @Before([ Before3, Before4 ])
   @After([ After3, After4 ])
   @Get('/')
-  async index() {
+  index() {
     return 'hi, egg';
   }
 

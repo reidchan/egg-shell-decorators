@@ -12,7 +12,7 @@ const ctHandler = new ControllerHandler();
 const methodHandler = new MethodHandler(ctMap);
 
 const EggShell = (app, options) => {
-  const { router } = app;
+  const { router, jwt } = app;
   // 设置全局路由前缀
   if (options && options.prefix) {
     router.prefix(options.prefix);
@@ -67,7 +67,11 @@ const EggShell = (app, options) => {
       if (ignoreJwt || ignoreJwtAll) {
         router[reqMethod](prefix + path, routerCb);
       } else {
-        router[reqMethod](prefix + path, app.jwt, routerCb);
+        if (jwt) {
+          router[reqMethod](prefix + path, jwt, routerCb);
+        } else {
+          router[reqMethod](prefix + path, routerCb);
+        }
       }
     }
   }
