@@ -1,5 +1,5 @@
 import { Controller } from 'egg';
-import { Get, Post, Put, Delete, Patch, IgnoreJwtAll } from 'egg-shell';
+import { Get, Post, Put, Delete, Patch, IgnoreJwtAll } from 'egg-shell-decorators';
 
 @IgnoreJwtAll
 export default class SubOrderController extends Controller {

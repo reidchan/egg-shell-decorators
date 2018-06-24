@@ -10,7 +10,8 @@
   "dependencies": {
     "egg": "^2.6.1",
     "egg-jwt": "^3.0.0",
-    "egg-scripts": "^2.6.0"
+    "egg-scripts": "^2.6.0",
+    "egg-shell-decorators": "^1.0.0"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.40",

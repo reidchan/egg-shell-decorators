@@ -1,4 +1,4 @@
-<img width="100" src="http://outt0i9l8.bkt.clouddn.com/egg-shell.png"/>
+<img width="100" src="http://outt0i9l8.bkt.clouddn.com/egg-shell-decorators.png"/>
 
 <p>
   <img src="https://img.shields.io/badge/version-1.0.0-ff69b4.svg"/>
@@ -9,7 +9,7 @@
 
 # Installation
 ```shell
-$ npm install egg-shell -S
+$ npm install egg-shell-decorators -S
 ```
 
 如果不是采用 TypeScript 脚手架，则需执行以下脚本安装相关的 Babel 插件：
@@ -22,7 +22,7 @@ $ npm install babel-register babel-plugin-transform-decorators-legacy -D
 ```typescript
 // app/router.ts
 import { Application } from 'egg';
-import { EggShell } from 'egg-shell';
+import { EggShell } from 'egg-shell-decorators';
 
 export default (app: Application) => {
   EggShell(app, { prefix: '/', quickStart: true });
@@ -47,7 +47,7 @@ require('babel-register')({
 ```
 
 # Specialty
-`路由解析`是 egg-shell 最大的特点，使用 Decorator 装饰的路由，则会被自动解析成对应的路由：
+`路由解析`是 egg-shell-decorators 最大的特点，使用 Decorator 装饰的路由，则会被自动解析成对应的路由：
 - 文件路径：`app/controller/home.ts`
   - @Get('/detail/:id')
   - @Post('/')
@@ -84,7 +84,7 @@ require('babel-register')({
 在 EggShell 里配置 `quickStart` 为 true 即可开启 QuickStart 模式，QuickStart 模式会自动处理响应体：
 ```typescript
 import { Controller } from 'egg';
-import { Get, Message, Error, StatusError } from 'egg-shell';
+import { Get, Message, Error, StatusError } from 'egg-shell-decorators';
 
 export default class UserController extends Controller {
 
@@ -134,10 +134,10 @@ export default class UserController extends Controller {
 ```
 
 ## RESTful
-让我们用 egg-shell 快速写一套 RESTful 风格的接口（QuickStart 模式）：
+让我们用 egg-shell-decorators 快速写一套 RESTful 风格的接口（QuickStart 模式）：
 ```typescript
 import { Controller } from 'egg';
-import { Get, Post, Put, Delete } from 'egg-shell';
+import { Get, Post, Put, Delete } from 'egg-shell-decorators';
 
 export default class SubOrderController extends Controller {
 
@@ -164,15 +164,15 @@ export default class SubOrderController extends Controller {
 }
 ```
 
-由于 egg-shell 内置把 `ctx` 对象传进 Controller 的函数里了，所以我们直接结构就可以获取到请求参数了，美滋滋~
+由于 egg-shell-decorators 内置把 `ctx` 对象传进 Controller 的函数里了，所以我们直接结构就可以获取到请求参数了，美滋滋~
 
-当然，除了这四个常用的请求方法，egg-shell 还提供了其他比较常用的请求方法，具体请看上面的`Http请求方法`。
+当然，除了这四个常用的请求方法，egg-shell-decorators 还提供了其他比较常用的请求方法，具体请看上面的`Http请求方法`。
 
 ## Jwt
-Jwt是目前比较流行的身份认证机制，所以 egg-shell 提供了相关的 Decorator。如果你使用了 `egg-jwt`，那默认所以路由都需要进行身份校验，而有时我们想让部分路由不用校验，那么你只需那么做：
+Jwt是目前比较流行的身份认证机制，所以 egg-shell-decorators 提供了相关的 Decorator。如果你使用了 `egg-jwt`，那默认所以路由都需要进行身份校验，而有时我们想让部分路由不用校验，那么你只需那么做：
 ```typescript
 import { Controller } from 'egg';
-import { Get, IgnoreJwt } from 'egg-shell';
+import { Get, IgnoreJwt } from 'egg-shell-decorators';
 
 export default class HomeController extends Controller {
 
@@ -189,7 +189,7 @@ export default class HomeController extends Controller {
 ```typescript
 
 import { Controller } from 'egg';
-import { Get, Post, IgnoreJwtAll } from 'egg-shell';
+import { Get, Post, IgnoreJwtAll } from 'egg-shell-decorators';
 
 @IgnoreJwtAll
 export default class HomeController extends Controller {
@@ -208,20 +208,20 @@ export default class HomeController extends Controller {
 ```
 
 ## MiddleWare
-egg-shell 提供了四个中间件相关的 Decorator，让你使用中间件更简单：
+egg-shell-decorators 提供了四个中间件相关的 Decorator，让你使用中间件更简单：
 ```typescript
 import { Controller } from 'egg';
-import { Get, IgnoreJwtAll, Before, After, BeforeAll, AfterAll } from 'egg-shell';
+import { Get, IgnoreJwtAll, Before, After, BeforeAll, AfterAll } from 'egg-shell-decorators';
 
-const Before1 = require('egg-shell/test/middlewares/before-1');
-const Before2 = require('egg-shell/test/middlewares/before-2');
-const Before3 = require('egg-shell/test/middlewares/before-3');
-const Before4 = require('egg-shell/test/middlewares/before-4');
+const Before1 = require('egg-shell-decorators/test/middlewares/before-1');
+const Before2 = require('egg-shell-decorators/test/middlewares/before-2');
+const Before3 = require('egg-shell-decorators/test/middlewares/before-3');
+const Before4 = require('egg-shell-decorators/test/middlewares/before-4');
 
-const After1 = require('egg-shell/test/middlewares/after-1');
-const After2 = require('egg-shell/test/middlewares/after-2');
-const After3 = require('egg-shell/test/middlewares/after-3');
-const After4 = require('egg-shell/test/middlewares/after-4');
+const After1 = require('egg-shell-decorators/test/middlewares/after-1');
+const After2 = require('egg-shell-decorators/test/middlewares/after-2');
+const After3 = require('egg-shell-decorators/test/middlewares/after-3');
+const After4 = require('egg-shell-decorators/test/middlewares/after-4');
 
 @BeforeAll([ Before1, Before2 ])
 @AfterAll([ After1, After2 ])

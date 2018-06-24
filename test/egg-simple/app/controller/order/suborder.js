@@ -1,7 +1,7 @@
 'use strict';
 
 const { Controller } = require('egg');
-const { Get, Post, Put, Delete, Patch, IgnoreJwtAll } = require('egg-shell');
+const { Get, Post, Put, Delete, Patch, IgnoreJwtAll } = require('egg-shell-decorators');
 
 @IgnoreJwtAll
 class SubOrderController extends Controller {
