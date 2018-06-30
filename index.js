@@ -11,12 +11,12 @@ const ctMap = new Map();
 const ctHandler = new ControllerHandler();
 const methodHandler = new MethodHandler(ctMap);
 
-const EggShell = (app, options) => {
+const EggShell = (app, options = {}) => {
   const { router, jwt } = app;
   // 设置全局路由前缀
-  if (options && options.prefix) {
-    router.prefix(options.prefix);
-  }
+  if (options.prefix) router.prefix(options.prefix);
+  options.before = options.before || [];
+  options.after = options.after || [];
 
   for (const c of ctMap.values()) {
     // 解析控制器元数据
@@ -26,22 +26,25 @@ const EggShell = (app, options) => {
     });
 
     // 解析前缀
-    const fullPath = c.fullPath;
+    const fullPath = c.fullPath.
+      split('\\').join('/').
+      replace(/[\/]{2,9}/g, '/').
+      replace(/(\.ts)|(\.js)/g, '');
     const rootPath = 'controller/';
-    prefix = prefix || fullPath.substring(fullPath.indexOf(rootPath) + rootPath.length).replace('.js', '').replace('.ts', '');
+    prefix = prefix || fullPath.substring(fullPath.indexOf(rootPath) + rootPath.length);
     prefix = prefix.startsWith('/') ? prefix : '/' + prefix;
 
     for (const pName of propertyNames) {
       // 解析函数元数据
       const { reqMethod, path, before, after, message, ignoreJwt } = methodHandler.getMetada(c[pName]);
-      const befores = [ ...beforeAll, ...before ];
-      const afters = [ ...afterAll, ...after ];
+      const befores = [ ...options.before, ...beforeAll, ...before ];
+      const afters = [ ...options.after, ...afterAll, ...after ];
       const routerCb = async ctx => {
         const instance = new c.constructor(ctx);
-        for (const before of befores) {
-          await before(ctx, instance);
-        }
         try {
+          for (const before of befores) {
+            await before(ctx, instance);
+          }
           const result = await instance[pName](ctx);
           if (options.quickStart) {
             ctx.response.body = {
@@ -50,6 +53,9 @@ const EggShell = (app, options) => {
               data: result,
             };
           }
+          for (const after of afters) {
+            await after(ctx, instance);
+          }
         } catch (error) {
           if (options.quickStart) {
             ctx.response.status = error.status || 500;
@@ -57,10 +63,9 @@ const EggShell = (app, options) => {
               success: false,
               message: error.message,
             };
+          } else {
+            throw error;
           }
-        }
-        for (const after of afters) {
-          await after(ctx, instance);
         }
       };
 

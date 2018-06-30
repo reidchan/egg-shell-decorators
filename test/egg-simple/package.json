@@ -4,8 +4,7 @@
   "dependencies": {
     "egg": "^2.2.1",
     "egg-jwt": "^3.0.0",
-    "egg-scripts": "^2.5.0",
-    "egg-shell-decorators": "^1.0.0"
+    "egg-scripts": "^2.5.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",
