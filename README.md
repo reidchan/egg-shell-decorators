@@ -1,7 +1,7 @@
 <img width="100" src="http://outt0i9l8.bkt.clouddn.com/egg-shell-decorators.png"/>
 
 <p>
-  <img src="https://img.shields.io/badge/version-1.0.0-ff69b4.svg"/>
+  <img src="https://img.shields.io/badge/version-1.0.1-ff69b4.svg"/>
   <img src="https://img.shields.io/packagist/l/doctrine/orm.svg"/>
 </p>
 
@@ -33,6 +33,8 @@ export default (app: Application) => {
 ```typescript
 prefix: string // 全局前缀
 quickStart: boolean // 开启QuickStart
+before: Function[] // 全局前置中间件
+after: Function[] // 全局后置中间件
 ```
 
 如果不是采用 TypeScript 脚手架，则需在入口注册 Bable 插件使其支持 Decorator：
@@ -228,23 +230,43 @@ export default class HomeController extends Controller {
 ```
 
 ## MiddleWare
-egg-shell-decorators 提供了四个中间件相关的 Decorator，让你使用中间件更简单：
+egg-shell-decorators 提供了四个中间件相关的 Decorator，配合上配置里的`全局中间件`，让你使用中间件更简单：
+```typescript
+// app/router.ts
+import { Application } from 'egg';
+import { EggShell } from 'egg-shell-decorators';
+
+const Before1 = require('egg-shell-decorators/test/middlewares/before-1');
+const Before2 = require('egg-shell-decorators/test/middlewares/before-2');
+const After1 = require('egg-shell-decorators/test/middlewares/after-1');
+const After2 = require('egg-shell-decorators/test/middlewares/after-2');
+
+export default (app: Application) => {
+  EggShell(app, {
+    prefix: '/',
+    quickStart: true,
+    before: [ Before1, Before2 ],
+    after: [ After1, After2 ],
+  });
+};
+```
+
 ```typescript
 import { Controller } from 'egg';
 import { Get, IgnoreJwtAll, Before, After, BeforeAll, AfterAll } from 'egg-shell-decorators';
 
-const Before1 = require('egg-shell-decorators/test/middlewares/before-1');
-const Before2 = require('egg-shell-decorators/test/middlewares/before-2');
 const Before3 = require('egg-shell-decorators/test/middlewares/before-3');
 const Before4 = require('egg-shell-decorators/test/middlewares/before-4');
+const Before5 = require('egg-shell-decorators/test/middlewares/before-5');
+const Before6 = require('egg-shell-decorators/test/middlewares/before-6');
 
-const After1 = require('egg-shell-decorators/test/middlewares/after-1');
-const After2 = require('egg-shell-decorators/test/middlewares/after-2');
 const After3 = require('egg-shell-decorators/test/middlewares/after-3');
 const After4 = require('egg-shell-decorators/test/middlewares/after-4');
+const After5 = require('egg-shell-decorators/test/middlewares/after-5');
+const After6 = require('egg-shell-decorators/test/middlewares/after-6');
 
-@BeforeAll([ Before1, Before2 ])
-@AfterAll([ After1, After2 ])
+@BeforeAll([ Before3, Before4 ])
+@AfterAll([ After3, After4 ])
 @IgnoreJwtAll
 export default class HomeController extends Controller {
 
@@ -253,14 +275,18 @@ export default class HomeController extends Controller {
    before middleware => 2
    before middleware => 3
    before middleware => 4
+   before middleware => 5
+   before middleware => 6
    主业务...
    after middleware => 1
    after middleware => 2
    after middleware => 3
    after middleware => 4
+   after middleware => 5
+   after middleware => 6
    */
-  @Before([ Before3, Before4 ])
-  @After([ After3, After4 ])
+  @Before([ Before5, Before6 ])
+  @After([ After5, After6 ])
   @Get('/')
   public async index() {
     return 'hi, egg';
