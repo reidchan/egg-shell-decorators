@@ -1,12 +1,11 @@
 {
   "name": "egg-shell-decorators",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
   "repository": "https://github.com/super2god/egg-shell-decorators.git",
   "author": "super2god <910147606@qq.com>",
   "license": "MIT", 
   "scripts": {
-    "install": "ln -nsf ../ node_modules/egg-shell-decorators",
     "test-simple": "cd test/egg-simple && yarn run dev",
     "test-ts": "cd test/egg-ts && yarn run dev"
   },
