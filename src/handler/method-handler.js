@@ -6,7 +6,16 @@ const {
   BEFORE_METADATA,
   AFTER_METADATA,
   MESSAGE_METADATA,
-  IGNORE_JWT_METADATA } = require('../constants');
+  IGNORE_JWT_METADATA,
+  TAGS_METADATA,
+  SUMMARY_METADATA,
+  DESCRIPTION_METADATA,
+  PARAMETERS_METADATA,
+  RESPONSES_METADATA,
+  PRODUCES_METADATA,
+  CONSUMES_METADATA,
+  HIDDEN_METADATA,
+  TOKEN_TYPE_METADATA } = require('../constants');
 const RequestMethod = require('../enum/request-method');
 
 const createMappingDecorator = Symbol('createMappingDecorator');
@@ -26,6 +35,15 @@ class MethodHandler {
     const after = Reflect.getMetadata(AFTER_METADATA, targetCb) || [];
     const message = Reflect.getMetadata(MESSAGE_METADATA, targetCb);
     const ignoreJwt = Reflect.getMetadata(IGNORE_JWT_METADATA, targetCb);
+    const parameters = Reflect.getMetadata(PARAMETERS_METADATA, targetCb) || [];
+    const responses = Reflect.getMetadata(RESPONSES_METADATA, targetCb);
+    const tags = Reflect.getMetadata(TAGS_METADATA, targetCb);
+    const summary = Reflect.getMetadata(SUMMARY_METADATA, targetCb);
+    const description = Reflect.getMetadata(DESCRIPTION_METADATA, targetCb);
+    const produces = Reflect.getMetadata(PRODUCES_METADATA, targetCb) || [ 'application/json' ];
+    const consumes = Reflect.getMetadata(CONSUMES_METADATA, targetCb) || [ 'application/json' ];
+    const hidden = Reflect.getMetadata(HIDDEN_METADATA, targetCb);
+    const tokenType = Reflect.getMetadata(TOKEN_TYPE_METADATA, targetCb);
     return {
       reqMethod,
       path,
@@ -33,6 +51,15 @@ class MethodHandler {
       after,
       message,
       ignoreJwt,
+      parameters,
+      responses,
+      tags,
+      summary,
+      description,
+      produces,
+      consumes,
+      hidden,
+      tokenType
     };
   }
 
@@ -78,6 +105,42 @@ class MethodHandler {
 
   ignoreJwt () {
     return this[createSingleDecorator](IGNORE_JWT_METADATA)(true);
+  }
+
+  tags () {
+    return this[createArrayDecorator](TAGS_METADATA);
+  }
+
+  summary () {
+    return this[createSingleDecorator](SUMMARY_METADATA);
+  }
+
+  description () {
+    return this[createSingleDecorator](DESCRIPTION_METADATA);
+  }
+
+  parameters () {
+    return this[createArrayDecorator](PARAMETERS_METADATA);
+  }
+
+  responses () {
+    return this[createSingleDecorator](RESPONSES_METADATA);
+  }
+
+  produces () {
+    return this[createArrayDecorator](PRODUCES_METADATA);
+  }
+
+  consumes () {
+    return this[createArrayDecorator](CONSUMES_METADATA);
+  }
+
+  hidden () {
+    return this[createSingleDecorator](HIDDEN_METADATA)(true);
+  }
+
+  tokenType () {
+    return this[createSingleDecorator](TOKEN_TYPE_METADATA);
   }
 
   [createMappingDecorator] (method) {

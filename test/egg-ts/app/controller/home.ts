@@ -16,9 +16,9 @@ const After6 = require('egg-shell-decorators/test/middlewares/after-6');
 @IgnoreJwtAll
 export default class HomeController extends Controller {
 
+  @Get('/')
   @Before([ Before5, Before6 ])
   @After([ After5, After6 ])
-  @Get('/')
   public index() {
     return 'hi, egg';
   }

@@ -1,22 +1,23 @@
 {
   "name": "egg-shell-decorators",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "main": "index.js",
   "repository": "https://github.com/super2god/egg-shell-decorators.git",
   "author": "super2god <910147606@qq.com>",
-  "license": "MIT", 
+  "license": "MIT",
   "scripts": {
     "test-simple": "cd test/egg-simple && yarn run dev",
     "test-ts": "cd test/egg-ts && yarn run dev"
   },
   "dependencies": {
-    "reflect-metadata": "^0.1.12",
-    "babel-plugin-transform-decorators-legacy": "^1.3.5"
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "express": "^4.16.3",
+    "reflect-metadata": "^0.1.12"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.2",
     "eslint": "^4.10.0",
-    "lodash": "^4.17.10",
-    "eslint-config-egg": "^7.0.0"
+    "eslint-config-egg": "^7.0.0",
+    "lodash": "^4.17.10"
   }
 }

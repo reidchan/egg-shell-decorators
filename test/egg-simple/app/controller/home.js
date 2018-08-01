@@ -1,7 +1,7 @@
 'use strict';
 
 const { Controller } = require('egg');
-const { Get, Before, After, BeforeAll, AfterAll, IgnoreJwtAll } = require('egg-shell-decorators');
+const { Get, Before, After, BeforeAll, AfterAll, IgnoreJwtAll, HiddenAll } = require('egg-shell-decorators');
 
 const Before3 = require('egg-shell-decorators/test/middlewares/before-3');
 const Before4 = require('egg-shell-decorators/test/middlewares/before-4');
@@ -13,9 +13,10 @@ const After4 = require('egg-shell-decorators/test/middlewares/after-4');
 const After5 = require('egg-shell-decorators/test/middlewares/after-5');
 const After6 = require('egg-shell-decorators/test/middlewares/after-6');
 
-@IgnoreJwtAll
 @BeforeAll([ Before3, Before4 ])
 @AfterAll([ After3, After4 ])
+@IgnoreJwtAll
+@HiddenAll
 class HomeController extends Controller {
 
   @Before([ Before5, Before6 ])

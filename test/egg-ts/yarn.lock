@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@koa/cors@^2.2.1":
+  version "2.2.2"
+  resolved "http://registry.npm.taobao.org/@koa/cors/download/@koa/cors-2.2.2.tgz#9084ab7f58107734e6b19d602d99538eda73f2d0"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "http://registry.npm.taobao.org/@mrmlnc/readdir-enhanced/download/@mrmlnc/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -1819,6 +1823,12 @@ egg-core@^4.6.0:
     node-homedir "^1.1.0"
     ready-callback "^2.0.1"
     utility "^1.13.1"
+
+egg-cors@^2.1.0:
+  version "2.1.0"
+  resolved "http://registry.npm.taobao.org/egg-cors/download/egg-cors-2.1.0.tgz#46bc924f2a33b6ebe5625866cb266384aabaa5d8"
+  dependencies:
+    "@koa/cors" "^2.2.1"
 
 egg-development@^2.2.0:
   version "2.2.0"

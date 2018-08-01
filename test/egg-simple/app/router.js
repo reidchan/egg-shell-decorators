@@ -13,5 +13,24 @@ module.exports = app => {
     quickStart: true,
     before: [ Before1, Before2 ],
     after: [ After1, After2 ],
+    swaggerOpt: {
+      open: true,
+      title: '测试示例',
+      version: '1.0.0',
+      host: '127.0.0.1',
+      port: 7001,
+      schemes: [ 'http' ],
+      paths: {
+        outPath: '../api-docs/public/json/jd.json',
+        definitionPath: './definitions',
+        swaggerPath: './swagger',
+      },
+      tokenOpt: {
+        tokens: {
+          manager: '123',
+          user: '321',
+        },
+      },
+    },
   });
 };

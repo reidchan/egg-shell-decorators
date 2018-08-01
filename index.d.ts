@@ -9,31 +9,60 @@ declare class StatusError {
   status: number;
 }
 
+interface SwaggerOpt {
+  open?: boolean,
+  title?: string;
+  version?: string;
+  host: string;
+  port: string|number;
+  schemes?: string[];
+  paths: object;
+  tokenOpt?: object;
+}
+
+
 interface Decorator {
   (target: any, key: string, descriptor: PropertyDescriptor): void
 }
 
-interface ValueDecorator {
+interface SingleDecorator {
   (value: any): Decorator
+}
+
+interface CoupleDecorator {
+  (value1: any, value2?: any): Decorator
 }
 
 export const EggShell: EggShell
 export const StatusError: StatusError
 
-export const Get: ValueDecorator
-export const Post: ValueDecorator
-export const Put: ValueDecorator
-export const Delete: ValueDecorator
-export const Patch: ValueDecorator
-export const Options: ValueDecorator
-export const Head: ValueDecorator
+export const Get: SingleDecorator
+export const Post: SingleDecorator
+export const Put: SingleDecorator
+export const Delete: SingleDecorator
+export const Patch: SingleDecorator
+export const Options: SingleDecorator
+export const Head: SingleDecorator
 
-export const Before: ValueDecorator
-export const After: ValueDecorator
-export const Message: ValueDecorator
+export const Before: SingleDecorator
+export const After: SingleDecorator
+export const Message: SingleDecorator
 export const IgnoreJwt: Decorator
+
+export const Tags: SingleDecorator
+export const Summary: SingleDecorator
+export const Description: SingleDecorator
+export const Parameters: Function
+export const Responses: Function
+export const Produces: SingleDecorator
+export const Consumes: SingleDecorator
+export const Hidden: Decorator
+export const TokenType: SingleDecorator
 
 export const IgnoreJwtAll: Function
 export const BeforeAll: Function
 export const AfterAll: Function
 export const Prefix: Function
+export const TagsAll: Function
+export const HiddenAll: Function
+export const TokenTypeAll: Function

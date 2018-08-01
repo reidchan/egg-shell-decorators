@@ -1,0 +1,20 @@
+{
+  "User": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "姓名"
+      },
+      "phone": {
+        "type": "string",
+        "description": "手机号码"
+      },
+      "age": {
+        "type": "integer",
+        "format": "int32",
+        "description": "年龄"
+      }
+    }
+  }
+}

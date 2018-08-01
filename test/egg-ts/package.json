@@ -1,4 +1,4 @@
- {
+{
   "name": "egg-ts",
   "private": true,
   "egg": {
@@ -17,6 +17,7 @@
     "@types/node": "^7.0.12",
     "@types/supertest": "^2.0.0",
     "egg-bin": "^4.6.2",
+    "egg-cors": "^2.1.0",
     "egg-ts-helper": "^1.4.2",
     "tslib": "^1.9.0",
     "tslint": "^4.0.0",
