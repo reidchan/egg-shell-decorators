@@ -10,9 +10,9 @@
 **具体使用请查阅[文档](http://super2god.github.io/egg-shell-decorators)**
 
 # 觉得不错就请作者喝杯咖啡呗~（速溶）️☕️
-![](http://outt0i9l8.bkt.clouddn.com/pay.png)
+![](http://outt0i9l8.bkt.clouddn.com/newpay.png)
 
 # 加入小组来面基~
 > 由于本人很少上QQ，所以建的是微信群，而微信群码很快就失效，所以想进交流群的小伙伴加我微信噢~~我拉你进群，欢迎大佬们加入:grin:
 
-![](http://outt0i9l8.bkt.clouddn.com/qrcode.png)
+![](http://outt0i9l8.bkt.clouddn.com/newqrcode.png)
