@@ -9,7 +9,7 @@
 
 **具体使用请查阅[文档](http://super2god.github.io/egg-shell-decorators)**
 
-# 喂作者辣条~😛
+# 喂作者一根辣条~😛
 <img width="300" src="http://outt0i9l8.bkt.clouddn.com/zanlatiao.png"/>
 
 # 加入小组来面基~
