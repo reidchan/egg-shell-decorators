@@ -1,7 +1,7 @@
 <img width="100" src="http://outt0i9l8.bkt.clouddn.com/egg-shell-decorators.png"/>
 
 <p>
-  <img src="https://img.shields.io/badge/version-1.0.4-ff69b4.svg"/>
+  <img src="https://img.shields.io/badge/version-1.0.5-ff69b4.svg"/>
   <img src="https://img.shields.io/packagist/l/doctrine/orm.svg"/>
 </p>
 

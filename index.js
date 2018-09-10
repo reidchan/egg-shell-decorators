@@ -129,14 +129,6 @@ const EggShell = (app, options = {}) => {
           }
         }
 
-        if (responses) {
-          responses = {
-            200: {
-              schema: responses
-            }
-          };
-        }
-
         if (!_.isEmpty(swaggerOpt.tokenOpt) && jwt && !ignoreJwtAll && !ignoreJwt) {
           const tokenOpt = swaggerOpt.tokenOpt;
           let token = null;
@@ -199,15 +191,7 @@ const EggShell = (app, options = {}) => {
             await after(ctx, next);
           }
         } catch (error) {
-          if (options.quickStart) {
-            ctx.response.status = error.status || 500;
-            ctx.response.body = {
-              success: false,
-              message: error.message,
-            };
-          } else {
-            throw error;
-          }
+          throw error;
         }
       };
 

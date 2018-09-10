@@ -14,7 +14,7 @@ module.exports = app => {
     before: [ Before1, Before2 ],
     after: [ After1, After2 ],
     swaggerOpt: {
-      open: true,
+      open: false,
       title: '测试示例',
       version: '1.0.0',
       host: '127.0.0.1',

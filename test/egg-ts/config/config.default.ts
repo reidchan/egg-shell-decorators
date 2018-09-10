@@ -15,6 +15,16 @@ export default (appInfo: EggAppInfo) => {
 
   config.middleware = [];
 
+  config.onerror = {
+    all (error: any, ctx: any) {
+      ctx.response.status = error.status || 500;
+      ctx.response.body = {
+        success: false,
+        message: error.message,
+      };
+    },
+  };
+
   const customizeConfig = {
     jwt: {
       secret: '123456',
