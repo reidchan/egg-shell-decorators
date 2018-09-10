@@ -1851,11 +1851,11 @@ egg-jsonp@^2.0.0:
     is-type-of "^1.2.0"
     jsonp-body "^1.0.0"
 
-egg-jwt@^3.0.0:
-  version "3.0.0"
-  resolved "http://registry.npm.taobao.org/egg-jwt/download/egg-jwt-3.0.0.tgz#6bc715d209666ef635547a922442f6fa63bb6c88"
+egg-jwt@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/egg-jwt/-/egg-jwt-3.1.2.tgz#5e1ab44bcb7ad6d6d5f76128dc1d49a014905158"
   dependencies:
-    jsonwebtoken "^8.0.0"
+    jsonwebtoken "^8.3.0"
     koa-jwt2 "^1.0.3"
 
 egg-logger@^1.6.1, egg-logger@^1.6.2:
@@ -1976,6 +1976,12 @@ egg-utils@^2.3.0, egg-utils@^2.4.0:
     mkdirp "^0.5.1"
     utility "^1.13.1"
 
+egg-view-ejs@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/egg-view-ejs/-/egg-view-ejs-2.0.0.tgz#996f38e61b497c92b449dbb1103141a13f32d65f"
+  dependencies:
+    ejs "^2.5.7"
+
 egg-view@^2.1.0:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/egg-view/download/egg-view-2.1.0.tgz#aa7ca0344213f5d72147d6001bc0503f858b425c"
@@ -2033,6 +2039,10 @@ egg@^2.6.1:
     urllib "^2.27.0"
     utility "^1.13.1"
     ylru "^1.2.0"
+
+ejs@^2.5.7:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.6.1.tgz#498ec0d495655abc6f23cd61868d926464071aa0"
 
 electron-to-chromium@^1.3.47:
   version "1.3.48"
@@ -3112,7 +3122,7 @@ jsonp-body@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/jsonp-body/download/jsonp-body-1.0.0.tgz#e610fb6fcea79cf0cc9f27baa7b56377d4b0bb36"
 
-jsonwebtoken@^8.0.0, jsonwebtoken@^8.1.0:
+jsonwebtoken@^8.1.0, jsonwebtoken@^8.3.0:
   version "8.3.0"
   resolved "http://registry.npm.taobao.org/jsonwebtoken/download/jsonwebtoken-8.3.0.tgz#056c90eee9a65ed6e6c72ddb0a1d325109aaf643"
   dependencies:

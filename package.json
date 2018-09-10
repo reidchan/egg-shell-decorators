@@ -1,6 +1,6 @@
 {
   "name": "egg-shell-decorators",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "main": "index.js",
   "repository": "https://github.com/super2god/egg-shell-decorators.git",
   "author": "super2god <910147606@qq.com>",

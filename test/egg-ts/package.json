@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "egg": "^2.6.1",
-    "egg-jwt": "^3.0.0",
+    "egg-jwt": "^3.1.2",
     "egg-scripts": "^2.6.0"
   },
   "devDependencies": {
@@ -19,6 +19,7 @@
     "egg-bin": "^4.6.2",
     "egg-cors": "^2.1.0",
     "egg-ts-helper": "^1.4.2",
+    "egg-view-ejs": "^2.0.0",
     "tslib": "^1.9.0",
     "tslint": "^4.0.0",
     "typescript": "^2.8.1"

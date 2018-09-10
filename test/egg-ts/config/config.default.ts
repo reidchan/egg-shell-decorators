@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 
 export type DefaultConfig = PowerPartial<EggAppConfig & BizConfig>;
@@ -15,13 +16,21 @@ export default (appInfo: EggAppInfo) => {
 
   config.middleware = [];
 
+  config.view = {
+    defaultViewEngine: 'ejs',
+    root: path.join(appInfo.baseDir, 'app/view'),
+    mapping: {
+      '.ejs': 'ejs',
+    },
+  };
+
   config.onerror = {
     all (error: any, ctx: any) {
       ctx.response.status = error.status || 500;
-      ctx.response.body = {
+      ctx.response.body = JSON.stringify({
         success: false,
         message: error.message,
-      };
+      });
     },
   };
 

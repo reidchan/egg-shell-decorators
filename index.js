@@ -175,8 +175,11 @@ const EggShell = (app, options = {}) => {
       const routerCb = async (ctx, next) => {
         const instance = new c.constructor(ctx);
         try {
+          if (!ignoreJwt && !ignoreJwtAll && jwt && options.jwtValidation) {
+            await options.jwtValidation()(ctx, next);
+          }
           for (const before of befores) {
-            await before(ctx, next);
+            await before()(ctx, next);
           }
           ctx.body = ctx.request ? ctx.request.body : null;
           const result = await instance[pName](ctx);
@@ -188,22 +191,14 @@ const EggShell = (app, options = {}) => {
             };
           }
           for (const after of afters) {
-            await after(ctx, next);
+            await after()(ctx, next);
           }
         } catch (error) {
           throw error;
         }
       };
 
-      if (ignoreJwt || ignoreJwtAll) {
-        router[reqMethod](prefix + path, routerCb);
-      } else {
-        if (jwt) {
-          router[reqMethod](prefix + path, jwt, routerCb);
-        } else {
-          router[reqMethod](prefix + path, routerCb);
-        }
-      }
+      router[reqMethod](prefix + path, routerCb);
     }
   }
 

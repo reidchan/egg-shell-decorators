@@ -1,5 +1,7 @@
 'use strict';
 
 module.exports = () => {
-  console.log('before middleware => 4');
+  return () => {
+    console.log('before middleware => 4');
+  };
 };
