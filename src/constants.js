@@ -16,6 +16,7 @@ module.exports = {
   CONSUMES_METADATA: 'consumes',
   HIDDEN_METADATA: 'hidden',
   TOKEN_TYPE_METADATA: 'token_type',
+  RENDER_METADATA: 'render',
 
   CONTROLLER_PREFIX_METADATA: 'controller_prefix',
   CONTROLLER_AFTER_ALL_METADATA: 'controller_after',
@@ -23,5 +24,6 @@ module.exports = {
   CONTROLLER_IGNORE_JWT_ALL_METADATA: 'controller_ignore_jwt_all',
   CONTROLLER_TAGS_ALL_METADATA: 'controller_tags_all',
   CONTROLLER_HIDDEN_METADATA: 'controller_hidden',
-  CONTROLLER_TOKEN_TYPE_ALL_METADATA: 'controller_token_type_all'
+  CONTROLLER_TOKEN_TYPE_ALL_METADATA: 'controller_token_type_all',
+  CONTROLLER_RENDER_METADATA: 'controller_render'
 };

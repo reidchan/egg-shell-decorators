@@ -15,7 +15,8 @@ const {
   PRODUCES_METADATA,
   CONSUMES_METADATA,
   HIDDEN_METADATA,
-  TOKEN_TYPE_METADATA } = require('../constants');
+  TOKEN_TYPE_METADATA,
+  RENDER_METADATA } = require('../constants');
 const RequestMethod = require('../enum/request-method');
 
 const createMappingDecorator = Symbol('createMappingDecorator');
@@ -44,6 +45,7 @@ class MethodHandler {
     const consumes = Reflect.getMetadata(CONSUMES_METADATA, targetCb) || [ 'application/json' ];
     const hidden = Reflect.getMetadata(HIDDEN_METADATA, targetCb);
     const tokenType = Reflect.getMetadata(TOKEN_TYPE_METADATA, targetCb);
+    const render = Reflect.getMetadata(RENDER_METADATA, targetCb);
     return {
       reqMethod,
       path,
@@ -59,7 +61,8 @@ class MethodHandler {
       produces,
       consumes,
       hidden,
-      tokenType
+      tokenType,
+      render
     };
   }
 
@@ -141,6 +144,10 @@ class MethodHandler {
 
   tokenType () {
     return this[createSingleDecorator](TOKEN_TYPE_METADATA);
+  }
+
+  render () {
+    return this[createSingleDecorator](RENDER_METADATA)(true);
   }
 
   [createMappingDecorator] (method) {

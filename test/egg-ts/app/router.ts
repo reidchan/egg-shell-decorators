@@ -10,7 +10,7 @@ const After2 = require('egg-shell-decorators/test/middlewares/after-2');
 export default (app: Application) => {
   EggShell(app, {
     prefix: '/',
-    quickStart: true,
+    quickStart: false,
     before: [ Before1, Before2 ],
     after: [ After1, After2 ],
     jwtValidation,

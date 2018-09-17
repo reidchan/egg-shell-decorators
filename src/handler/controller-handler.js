@@ -9,7 +9,8 @@ const {
   CONTROLLER_PREFIX_METADATA,
   CONTROLLER_TAGS_ALL_METADATA,
   CONTROLLER_HIDDEN_METADATA,
-  CONTROLLER_TOKEN_TYPE_ALL_METADATA } = require('../constants');
+  CONTROLLER_TOKEN_TYPE_ALL_METADATA,
+  CONTROLLER_RENDER_METADATA } = require('../constants');
 
 const createArrayDecorator = Symbol('createArrayDecorator');
 const createSingleDecorator = Symbol('createSingleDecorator');
@@ -44,6 +45,10 @@ class ControllerHandler {
     return this[createSingleDecorator](CONTROLLER_TOKEN_TYPE_ALL_METADATA);
   }
 
+  renderController () {
+    return this[createSingleDecorator](CONTROLLER_RENDER_METADATA)(true);
+  }
+
   getMetada (target) {
     const ignoreJwtAll = Reflect.getMetadata(CONTROLLER_IGNORE_JWT_ALL_METADATA, target);
     const beforeAll = Reflect.getMetadata(CONTROLLER_BEFORE_ALL_METADATA, target) || [];
@@ -52,6 +57,7 @@ class ControllerHandler {
     const tagsAll = Reflect.getMetadata(CONTROLLER_TAGS_ALL_METADATA, target);
     const hiddenAll = Reflect.getMetadata(CONTROLLER_HIDDEN_METADATA, target);
     const tokenTypeAll = Reflect.getMetadata(CONTROLLER_TOKEN_TYPE_ALL_METADATA, target);
+    const renderController = Reflect.getMetadata(CONTROLLER_RENDER_METADATA, target);
     return {
       ignoreJwtAll,
       beforeAll,
@@ -59,7 +65,8 @@ class ControllerHandler {
       prefix,
       tagsAll,
       hiddenAll,
-      tokenTypeAll
+      tokenTypeAll,
+      renderController
     };
   }
 

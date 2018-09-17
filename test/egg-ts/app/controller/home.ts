@@ -1,5 +1,5 @@
 import { Controller } from 'egg';
-import { Get, Before, After, BeforeAll, AfterAll } from 'egg-shell-decorators';
+import { Get, Before, After, BeforeAll, AfterAll, IgnoreJwt, RenderController } from 'egg-shell-decorators';
 
 const Before3 = require('egg-shell-decorators/test/middlewares/before-3');
 const Before4 = require('egg-shell-decorators/test/middlewares/before-4');
@@ -13,16 +13,19 @@ const After6 = require('egg-shell-decorators/test/middlewares/after-6');
 
 @BeforeAll([ Before3, Before4 ])
 @AfterAll([ After3, After4 ])
+@RenderController
 export default class HomeController extends Controller {
 
   @Get('/')
   @Before([ Before5, Before6 ])
   @After([ After5, After6 ])
+  @IgnoreJwt
   public index () {
     return 'hi, egg';
   }
 
   @Get('/pinduoduo')
+  @IgnoreJwt
   public async pinduoduo () {
     await this.ctx.render('pinduoduo.ejs');
   }

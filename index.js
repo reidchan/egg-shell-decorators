@@ -55,7 +55,7 @@ const EggShell = (app, options = {}) => {
 
   for (const c of ctMap.values()) {
     // 解析控制器元数据
-    let { ignoreJwtAll, beforeAll, afterAll, prefix, tagsAll, hiddenAll, tokenTypeAll } = ctHandler.getMetada(c.constructor);
+    let { ignoreJwtAll, beforeAll, afterAll, prefix, tagsAll, hiddenAll, tokenTypeAll, renderController } = ctHandler.getMetada(c.constructor);
     const propertyNames = _.filter(Object.getOwnPropertyNames(c), pName => {
       return pName !== 'constructor' && pName !== 'pathName' && pName !== 'fullPath';
     });
@@ -96,7 +96,7 @@ const EggShell = (app, options = {}) => {
 
     for (const pName of propertyNames) {
       // 解析函数元数据
-      let { reqMethod, path, before, after, message, ignoreJwt, tags, summary, description, parameters, responses, produces, consumes, hidden, tokenType } = methodHandler.getMetada(c[pName]);
+      let { reqMethod, path, before, after, message, ignoreJwt, tags, summary, description, parameters, responses, produces, consumes, hidden, tokenType, render } = methodHandler.getMetada(c[pName]);
       const befores = [ ...options.before, ...beforeAll, ...before ];
       const afters = [ ...options.after, ...afterAll, ...after ];
 
@@ -183,12 +183,14 @@ const EggShell = (app, options = {}) => {
           }
           ctx.body = ctx.request ? ctx.request.body : null;
           const result = await instance[pName](ctx);
-          if (options.quickStart) {
+          if (options.quickStart && !render && !renderController) {
             ctx.response.body = {
               success: true,
               message,
               data: result,
             };
+          } else if (renderController || render) {
+            ctx.set('Content-Type', 'text/html;charset=utf-8');
           }
           for (const after of afters) {
             await after()(ctx, next);
@@ -261,6 +263,7 @@ module.exports = {
   Consumes: methodHandler.consumes(),
   Hidden: methodHandler.hidden(),
   TokenType: methodHandler.tokenType(),
+  Render: methodHandler.render(),
 
   IgnoreJwtAll: ctHandler.ignoreJwtAll(),
   BeforeAll: ctHandler.beforeAll(),
@@ -269,4 +272,5 @@ module.exports = {
   TagsAll: ctHandler.tagsAll(),
   HiddenAll: ctHandler.hiddenAll(),
   TokenTypeAll: ctHandler.tokenTypeAll(),
+  RenderController: ctHandler.renderController()
 };

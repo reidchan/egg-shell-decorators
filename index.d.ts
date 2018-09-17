@@ -58,6 +58,7 @@ export const Produces: SingleDecorator
 export const Consumes: SingleDecorator
 export const Hidden: Decorator
 export const TokenType: SingleDecorator
+export const Render: Decorator
 
 export const IgnoreJwtAll: Function
 export const BeforeAll: Function
@@ -66,3 +67,4 @@ export const Prefix: Function
 export const TagsAll: Function
 export const HiddenAll: Function
 export const TokenTypeAll: Function
+export const RenderController: Function
