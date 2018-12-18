@@ -9,10 +9,6 @@
 
 **具体使用请查阅[文档](http://super2god.github.io/egg-shell-decorators)**
 
-# 喂作者一颗糖🍬
-<img width="300" src="http://outt0i9l8.bkt.clouddn.com/bftzancode.jpeg"/>
-
-# 加入小组来面基~
-> 由于本人很少上QQ，所以建的是微信群，而微信群码很快就失效，所以想进交流群的小伙伴加我微信噢~~我拉你进群，欢迎大佬们加入:grin:
-
-<img width="300" src="http://outt0i9l8.bkt.clouddn.com/bftwxcode.jpeg"/>
+# 加入技术群来面基~
+> 加我微信我拉你进Node技术交流群
+<img width="300" src="http://pjwz9z9va.bkt.clouddn.com/qravatar.jpeg"/>
