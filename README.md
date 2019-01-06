@@ -11,4 +11,4 @@
 
 > :kissing_heart:同时欢迎大家关注我的新项目[**pika-pikachu**](https://github.com/super2god/pika-pikachu)
 
-<img width="300" src="http://pkdydm5fm.bkt.clouddn.com/qrcode.jpeg"/>
+<img width="300" src="http://pkdydm5fm.bkt.clouddn.com/wxqrcode.jpeg"/>
