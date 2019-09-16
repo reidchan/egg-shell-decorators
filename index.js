@@ -16,6 +16,9 @@ const swaggerHttpMethod = [ 'get', 'post', 'put', 'delete', 'patch' ];
 
 const EggShell = (app, options = {}) => {
   const { router, jwt } = app;
+
+  const pathMap = new Map();
+
   // 设置全局路由前缀
   if (options.prefix) router.prefix(options.prefix);
   options.before = options.before || [];
@@ -201,6 +204,9 @@ const EggShell = (app, options = {}) => {
       };
 
       router[reqMethod](prefix + path, routerCb);
+
+      // 存入(method+pathm) 与 [target,property]的映射, 便于在中间件中根据path获取target上metaData，做出对应处理
+      pathMap.set(`${reqMethod}@${prefix+path}`, [c.constructor.prototype, pName]);
     }
   }
 
@@ -211,6 +217,14 @@ const EggShell = (app, options = {}) => {
       fs.writeFileSync(outPath, JSON.stringify(swaggerJson), { encoding: 'utf8' });
     }
   }
+
+  return {
+    getRouterTarget(path,method){
+      return pathMap.get(`${method.toLowerCase()}@${path}`)
+    }
+    // ... 
+  };
+
 };
 
 const paramsRegex = /:[\w-]*/g;

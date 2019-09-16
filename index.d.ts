@@ -1,15 +1,15 @@
 interface EggShell {
-  (app: object, options: object): void
+  (app: object, options: object): any
 }
 
-declare class StatusError {
+export declare class StatusError {
   constructor(message: string, status?: number);
 
   message: string;
   status: number;
 }
 
-interface SwaggerOpt {
+ interface SwaggerOpt {
   open?: boolean,
   title?: string;
   version?: string;
@@ -34,8 +34,6 @@ interface CoupleDecorator {
 }
 
 export const EggShell: EggShell
-export const StatusError: StatusError
-
 export const Get: SingleDecorator
 export const Post: SingleDecorator
 export const Put: SingleDecorator
