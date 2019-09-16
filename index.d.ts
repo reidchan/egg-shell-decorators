@@ -1,5 +1,5 @@
 interface EggShell {
-  (app: object, options: object): any
+  (app: object, options: object): {getRouterTarget:(path:string,method:string)=>[Function|null,string|null]}
 }
 
 export declare class StatusError {
