@@ -1,5 +1,9 @@
 interface EggShell {
-  (app: object, options: object): {getRouterTarget:(path:string,method:string)=>[Function|null,string|null]}
+  (app: object, options: object): void
+}
+
+interface GetRouterTarget{
+  (path: string, method: string): [Function,string] | [null,null]
 }
 
 export declare class StatusError {
@@ -9,7 +13,7 @@ export declare class StatusError {
   status: number;
 }
 
- interface SwaggerOpt {
+interface SwaggerOpt {
   open?: boolean,
   title?: string;
   version?: string;
@@ -34,6 +38,7 @@ interface CoupleDecorator {
 }
 
 export const EggShell: EggShell
+export const getRouterTarget: GetRouterTarget
 export const Get: SingleDecorator
 export const Post: SingleDecorator
 export const Put: SingleDecorator
