@@ -28,8 +28,6 @@ const getRouterTarget = (path,method) => {
 const EggShell = (app, options = {}) => {
   const { router, jwt } = app;
 
-  const pathMap = new Map();
-
   // 设置全局路由前缀
   if (options.prefix) router.prefix(options.prefix);
   options.before = options.before || [];
