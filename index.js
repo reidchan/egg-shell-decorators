@@ -215,7 +215,7 @@ const EggShell = (app, options = {}) => {
       router[reqMethod](prefix + path, routerCb);
 
       // 存入(method+pathm) 与 [target,property]的映射, 便于在中间件中根据path获取target上metaData，做出对应处理
-      pathMap.set(`${reqMethod}@${prefix+path}`, [c.constructor.prototype, pName]);
+      pathMap.set(`${reqMethod}@${prefix+path}`, [c.constructor, pName]);
     }
   }
 
