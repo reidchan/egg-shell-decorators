@@ -1,14 +1,13 @@
-<img width="100" src="http://pkdydm5fm.bkt.clouddn.com/egg.png"/>
+<img width="100" src="https://super-github.oss-cn-shenzhen.aliyuncs.com/package/egg-shell-decorators.png"/>
 
 <p>
   <img src="https://img.shields.io/badge/version-1.0.7-ff69b4.svg"/>
   <img src="https://img.shields.io/packagist/l/doctrine/orm.svg"/>
 </p>
 
-**具体使用请查阅[文档](http://super2god.github.io/egg-shell-decorators)**
+**具体使用请查阅[文档](https://www.yuque.com/super2god/open-source/egg-shell-decorators)**
 
-> 此项目暂时不维护了，感谢大家2018年对我的支持:blush:，明年会继续继续扎根Node和Java领域的研究和开发，有兴趣的同学可以加我微信我拉你进讨论群。
+# 加入小组来面基~
+由于本人很少上QQ，所以建的是微信群，而微信群码很快就失效，所以想进交流群的小伙伴加我微信噢\~~我拉你进群，欢迎大佬们加入☺️
 
-> :kissing_heart:同时欢迎大家关注我的新项目[**pika-pikachu**](https://github.com/super2god/pika-pikachu)
-
-<img width="300" src="http://pkdydm5fm.bkt.clouddn.com/wxqrcode.jpeg"/>
+<img width="300" src="https://super-github.oss-cn-shenzhen.aliyuncs.com/common/wxqrcode.jpeg"/>
