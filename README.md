@@ -1,7 +1,7 @@
 <img width="100" src="https://super-github.oss-cn-shenzhen.aliyuncs.com/package/egg-shell-decorators.png"/>
 
 <p>
-  <img src="https://img.shields.io/badge/version-1.0.7-ff69b4.svg"/>
+  <img src="https://img.shields.io/badge/version-1.5.0%20beta-ff69b4.svg"/>
   <img src="https://img.shields.io/packagist/l/doctrine/orm.svg"/>
 </p>
 

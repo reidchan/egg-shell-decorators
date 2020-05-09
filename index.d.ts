@@ -44,27 +44,9 @@ export const Patch: SingleDecorator
 export const Options: SingleDecorator
 export const Head: SingleDecorator
 
-export const Before: SingleDecorator
-export const After: SingleDecorator
 export const Message: SingleDecorator
-export const IgnoreJwt: Decorator
 
-export const Tags: SingleDecorator
-export const Summary: SingleDecorator
-export const Description: SingleDecorator
-export const Parameters: Function
-export const Responses: Function
-export const Produces: SingleDecorator
-export const Consumes: SingleDecorator
-export const Hidden: Decorator
-export const TokenType: SingleDecorator
 export const Render: Decorator
 
-export const IgnoreJwtAll: Function
-export const BeforeAll: Function
-export const AfterAll: Function
 export const Prefix: Function
-export const TagsAll: Function
-export const HiddenAll: Function
-export const TokenTypeAll: Function
 export const RenderController: Function
