@@ -24,4 +24,5 @@ export const Delete: SingleDecorator
 export const Patch: SingleDecorator
 export const Options: SingleDecorator
 export const Head: SingleDecorator
+export const Prefix: Function
 export const Middleware: Function

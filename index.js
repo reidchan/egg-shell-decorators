@@ -14,7 +14,7 @@ const EggShell = app => {
 
   for (const c of ctMap.values()) {
     // 解析控制器元数据
-    let { prefix, renderController } = ctHandler.getMetada(c.constructor);
+    let { prefix } = ctHandler.getMetada(c.constructor);
     const propertyNames = _.filter(Object.getOwnPropertyNames(c), pName => {
       return pName !== 'constructor' && pName !== 'pathName' && pName !== 'fullPath';
     });
@@ -40,9 +40,6 @@ const EggShell = app => {
           throw error;
         }
       };
-
-      console.log(path, middlewares);
-
       router[reqMethod](prefix + path, ...middlewares, routerCb);
     }
   }

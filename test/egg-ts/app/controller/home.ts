@@ -1,6 +1,7 @@
 import { Controller } from 'egg';
-import { Get } from 'egg-shell-decorators';
+import { Get, Prefix } from 'egg-shell-decorators';
 
+@Prefix('/super2god')
 export default class HomeController extends Controller {
 
   @Get('/')

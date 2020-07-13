@@ -7,7 +7,11 @@
 
 > 蛋壳\~给你的Egg加个壳\~（该项目本人会继续维护，欢迎大家提Issues和加入微信群~）
 
-**具体使用请查阅[文档](https://www.yuque.com/super2god/open-source/egg-shell-decorators)**
+# 版本
+| 版本 | 文档 | 上线时间 |
+| ---- | ---- | ----  |
+| v1.0.5-beta | [点击跳转](https://www.yuque.com/super2god/open-source/egg-shell-decorators-v1.5.0-beta) | 2020-07-13 |
+| v1.0.7 | [点击跳转](https://www.yuque.com/super2god/open-source/egg-shell-decorators-v1.0.7) | 2018-12-29 |
 
 # 示例代码
 蛋壳示例代码请查看该项目：[egg-shell-example](https://github.com/super2god/egg-shell-example)（蛋壳示例代码）。
