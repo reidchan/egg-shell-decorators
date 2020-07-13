@@ -17,10 +17,6 @@ class ControllerHandler {
     return this[createSingleDecorator](CONTROLLER_PREFIX_METADATA);
   }
 
-  renderController() {
-    return this[createSingleDecorator](CONTROLLER_RENDER_METADATA)(true);
-  }
-
   getMetada(target) {
     const prefix = Reflect.getMetadata(CONTROLLER_PREFIX_METADATA, target);
     const renderController = Reflect.getMetadata(CONTROLLER_RENDER_METADATA, target);

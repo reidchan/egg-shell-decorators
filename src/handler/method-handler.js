@@ -1,10 +1,9 @@
 'use strict';
 
 const {
+  MIDDLEWARE_METADATA,
   METHOD_METADATA,
-  PATH_METADATA,
-  MESSAGE_METADATA,
-  RENDER_METADATA } = require('../constants');
+  PATH_METADATA } = require('../constants');
 const RequestMethod = require('../enum/request-method');
 
 const createMappingDecorator = Symbol('createMappingDecorator');
@@ -18,16 +17,18 @@ class MethodHandler {
   }
 
   getMetada (targetCb) {
+    const middlewares = Reflect.getMetadata(MIDDLEWARE_METADATA, targetCb) || [];
     const reqMethod = Reflect.getMetadata(METHOD_METADATA, targetCb);
     const path = Reflect.getMetadata(PATH_METADATA, targetCb);
-    const message = Reflect.getMetadata(MESSAGE_METADATA, targetCb);
-    const render = Reflect.getMetadata(RENDER_METADATA, targetCb);
     return {
+      middlewares,
       reqMethod,
-      path,
-      message,
-      render
+      path
     };
+  }
+
+  middleware () {
+    return this[createArrayDecorator](MIDDLEWARE_METADATA);
   }
 
   get () {
@@ -56,14 +57,6 @@ class MethodHandler {
 
   head () {
     return this[createMappingDecorator](RequestMethod.HEAD);
-  }
-
-  message () {
-    return this[createSingleDecorator](MESSAGE_METADATA);
-  }
-
-  render () {
-    return this[createSingleDecorator](RENDER_METADATA)(true);
   }
 
   [createMappingDecorator] (method) {
@@ -100,7 +93,7 @@ class MethodHandler {
   [createArrayDecorator] (metadata) {
     return values => {
       return (target, key, descriptor) => {
-        const _values = Reflect.getMetadata(metadata, descriptor.value) || [];
+        const _values = Reflect.getOwnMetadata(metadata, descriptor.value) || [];
         values = (values instanceof Array) ? values : [ values ];
         values = values.concat(_values);
         Reflect.defineMetadata(metadata, values, descriptor.value);
