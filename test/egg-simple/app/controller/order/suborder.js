@@ -7,22 +7,22 @@ class SubOrderController extends Controller {
 
   @Get('/:id')
   get({ params: { id }, query: { keyword } }) {
-    return `resuful get : ${id}, ${keyword}`;
+    this.ctx.body =  `resuful get : ${id}, ${keyword}`;
   }
 
   @Post('/:id')
   post({ params: { id }, request: { body: { keyword } } }) {
-    return `resuful post : ${id}, ${keyword}`;
+    this.ctx.body =  `resuful post : ${id}, ${keyword}`;
   }
 
   @Put('/:id')
   put({ params: { id }, request: { body: { keyword } } }) {
-    return `resuful put : ${id}, ${keyword}`;
+    this.ctx.body =  `resuful put : ${id}, ${keyword}`;
   }
 
   @Delete('/:id')
   delete({ params: { id }, request: { body: { keyword } } }) {
-    return `resuful delete : ${id}, ${keyword}`;
+    this.ctx.body =  `resuful delete : ${id}, ${keyword}`;
   }
 
   @Patch('/:id')

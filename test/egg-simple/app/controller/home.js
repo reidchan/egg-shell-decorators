@@ -7,7 +7,7 @@ class HomeController extends Controller {
 
   @Get('/')
   index() {
-    return 'hi, egg';
+    this.ctx.body = 'hi, egg';
   }
 
 }

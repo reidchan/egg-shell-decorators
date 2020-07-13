@@ -8,9 +8,4 @@ export default class HomeController extends Controller {
     this.ctx.body = 'hello';
   }
 
-  @Get('/pinduoduo')
-  public async pinduoduo () {
-    await this.ctx.render('pinduoduo.ejs');
-  }
-
 }
