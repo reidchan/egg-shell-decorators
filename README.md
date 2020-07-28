@@ -1,15 +1,33 @@
 <img width="100" src="https://super-github.oss-cn-shenzhen.aliyuncs.com/package/egg-shell-decorators.png"/>
 
 <p>
-  <img src="https://img.shields.io/badge/version-1.5.0%20beta-ff69b4.svg"/>
+  <img src="https://img.shields.io/badge/version-1.5.0-ff69b4.svg"/>
   <img src="https://img.shields.io/packagist/l/doctrine/orm.svg"/>
 </p>
 
-> 蛋壳\~给你的Egg加个壳\~（该项目本人会继续维护，欢迎大家提Issues和加入微信群~）
+> 蛋壳\~给你的Egg加个壳\~（该项目本人会持续维护，欢迎大家提Issues和加入微信群~）
+
+# 快速开始
+```ts
+import { Controller } from 'egg';
+import { Get, Middleware } from 'egg-shell-decorators';
+import JwtValidator from '../middleware/jwt-validator';
+
+export default class UserController extends Controller {
+
+  @Get('/')
+  @Middleware([ JwtValidator() ])
+  public getUser() {
+    this.ctx.body = { name: 'super2god' };
+  }
+
+}
+```
 
 # 版本
 | 版本 | 文档 | 上线时间 |
 | ---- | ---- | ----  |
+| v1.5.0 | [点击跳转](https://www.yuque.com/super2god/open-source/egg-shell-decorators-v1.5.0) | 2020-07-28 |
 | v1.5.0-beta | [点击跳转](https://www.yuque.com/super2god/open-source/egg-shell-decorators-v1.5.0-beta) | 2020-07-13 |
 | v1.0.7 | [点击跳转](https://www.yuque.com/super2god/open-source/egg-shell-decorators-v1.0.7) | 2018-12-29 |
 
