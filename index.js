@@ -8,12 +8,15 @@ const fs = require("fs");
 const StatusError = require("./src/exception/status-error");
 const ControllerHandler = require("./src/handler/controller-handler");
 const MethodHandler = require("./src/handler/method-handler");
-const { PARAM_INFO, BODY } = require("./src/decorators/symbols");
+const { PARAM_INFO, BODY, QUERY, HEADER } = require("./src/decorators/symbols");
 const { DH_UNABLE_TO_CHECK_GENERATOR } = require("constants");
 const ctMap = new Map();
 const ctHandler = new ControllerHandler();
 const methodHandler = new MethodHandler(ctMap);
 const swaggerHttpMethod = ["get", "post", "put", "delete", "patch"];
+
+const { validateSync } = require("class-validator");
+const { plainToClass } = require("class-transformer");
 
 const EggShell = (app, options = {}) => {
   const { router, jwt } = app;
@@ -252,17 +255,31 @@ const EggShell = (app, options = {}) => {
             await before()(ctx, next);
           }
           ctx.body = ctx.request ? ctx.request.body : null;
-          const result = await instance[pName](ctx);
 
           const params = Reflect.getMetadata(PARAM_INFO, instance, pName);
 
-          instance[pName].apply(
+          const result = await instance[pName].apply(
             instance,
             params.map((param) => {
               if (!param) return undefined;
               switch (param.extract) {
                 case BODY:
+                  const containerClass = plainToClass(
+                    param.typeInfo,
+                    ctx.request.body
+                  );
+
+                  const errors = validateSync(containerClass);
+                  if (errors.length) {
+                    throw new Error(errors);
+                  }
                   return ctx.request.body;
+                case QUERY:
+                  return ctx.request.query[param.key] || undefined;
+                case HEADER:
+                  return (
+                    ctx.request.headers[param.key.toLowerCase()] || undefined
+                  );
                 default:
                   return undefined;
               }
@@ -339,6 +356,10 @@ function getDefinition(definitions, definitionPath) {
 module.exports = {
   EggShell,
   StatusError,
+
+  Body: require("./src/decorators/Body"),
+  Query: require("./src/decorators/Query"),
+  Header: require("./src/decorators/Header"),
 
   Get: methodHandler.get(),
   Post: methodHandler.post(),
