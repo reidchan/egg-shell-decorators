@@ -1,18 +1,19 @@
-'use strict';
+"use strict";
 
-require('reflect-metadata');
-const _ = require('lodash');
-const nodePath = require('path');
-const fs = require('fs');
+require("reflect-metadata");
+const _ = require("lodash");
+const nodePath = require("path");
+const fs = require("fs");
 
-const StatusError = require('./src/exception/status-error');
-const ControllerHandler = require('./src/handler/controller-handler');
-const MethodHandler = require('./src/handler/method-handler');
-
+const StatusError = require("./src/exception/status-error");
+const ControllerHandler = require("./src/handler/controller-handler");
+const MethodHandler = require("./src/handler/method-handler");
+const { PARAM_INFO, BODY } = require("./src/decorators/symbols");
+const { DH_UNABLE_TO_CHECK_GENERATOR } = require("constants");
 const ctMap = new Map();
 const ctHandler = new ControllerHandler();
 const methodHandler = new MethodHandler(ctMap);
-const swaggerHttpMethod = [ 'get', 'post', 'put', 'delete', 'patch' ];
+const swaggerHttpMethod = ["get", "post", "put", "delete", "patch"];
 
 const EggShell = (app, options = {}) => {
   const { router, jwt } = app;
@@ -27,22 +28,27 @@ const EggShell = (app, options = {}) => {
   if (options.swaggerOpt && options.swaggerOpt.open) {
     swaggerOpt = options.swaggerOpt;
     swaggerJson = {
-      swagger: '2.0',
+      swagger: "2.0",
       info: {
-        title: swaggerOpt.title || '',
-        version: swaggerOpt.version || '',
+        title: swaggerOpt.title || "",
+        version: swaggerOpt.version || "",
       },
-      host: swaggerOpt.port ? swaggerOpt.host + ':' + swaggerOpt.port : swaggerOpt.host,
+      host: swaggerOpt.port
+        ? swaggerOpt.host + ":" + swaggerOpt.port
+        : swaggerOpt.host,
       basePath: swaggerOpt.basePath || options.prefix,
-      schemes: swaggerOpt.schemes || [ 'http' ],
+      schemes: swaggerOpt.schemes || ["http"],
       tags: [],
       paths: {},
-      definitions: {}
+      definitions: {},
     };
 
     // definition
     if (swaggerOpt.paths && swaggerOpt.paths.definitionPath) {
-      const definitionPath = nodePath.join(__dirname, nodePath.normalize('../../' + swaggerOpt.paths.definitionPath));
+      const definitionPath = nodePath.join(
+        __dirname,
+        nodePath.normalize("../../" + swaggerOpt.paths.definitionPath)
+      );
       try {
         fs.statSync(definitionPath);
       } catch (error) {
@@ -55,19 +61,33 @@ const EggShell = (app, options = {}) => {
 
   for (const c of ctMap.values()) {
     // 解析控制器元数据
-    let { ignoreJwtAll, beforeAll, afterAll, prefix, tagsAll, hiddenAll, tokenTypeAll, renderController } = ctHandler.getMetada(c.constructor);
-    const propertyNames = _.filter(Object.getOwnPropertyNames(c), pName => {
-      return pName !== 'constructor' && pName !== 'pathName' && pName !== 'fullPath';
+    let {
+      ignoreJwtAll,
+      beforeAll,
+      afterAll,
+      prefix,
+      tagsAll,
+      hiddenAll,
+      tokenTypeAll,
+      renderController,
+    } = ctHandler.getMetada(c.constructor);
+    const propertyNames = _.filter(Object.getOwnPropertyNames(c), (pName) => {
+      return (
+        pName !== "constructor" && pName !== "pathName" && pName !== "fullPath"
+      );
     });
 
     // 解析前缀
-    const fullPath = c.fullPath.
-      split('\\').join('/').
-      replace(/[\/]{2,9}/g, '/').
-      replace(/(\.ts)|(\.js)/g, '');
-    const rootPath = 'controller/';
-    prefix = prefix || fullPath.substring(fullPath.indexOf(rootPath) + rootPath.length);
-    prefix = prefix.startsWith('/') ? prefix : '/' + prefix;
+    const fullPath = c.fullPath
+      .split("\\")
+      .join("/")
+      .replace(/[\/]{2,9}/g, "/")
+      .replace(/(\.ts)|(\.js)/g, "");
+    const rootPath = "controller/";
+    prefix =
+      prefix ||
+      fullPath.substring(fullPath.indexOf(rootPath) + rootPath.length);
+    prefix = prefix.startsWith("/") ? prefix : "/" + prefix;
 
     // 获取swagger映射
     let loadParameters = null;
@@ -78,7 +98,10 @@ const EggShell = (app, options = {}) => {
       }
 
       if (swaggerOpt && swaggerOpt.paths && swaggerOpt.paths.swaggerPath) {
-        const swaggerPath = nodePath.join(__dirname, nodePath.normalize('../../' + swaggerOpt.paths.swaggerPath));
+        const swaggerPath = nodePath.join(
+          __dirname,
+          nodePath.normalize("../../" + swaggerOpt.paths.swaggerPath)
+        );
         try {
           fs.statSync(swaggerPath);
         } catch (error) {
@@ -86,9 +109,14 @@ const EggShell = (app, options = {}) => {
         }
 
         try {
-          const parameterFilePath = nodePath.join(swaggerPath, prefix + '.json');
+          const parameterFilePath = nodePath.join(
+            swaggerPath,
+            prefix + ".json"
+          );
           if (fs.statSync(parameterFilePath)) {
-            loadParameters = JSON.parse(fs.readFileSync(parameterFilePath, { encoding: 'utf8' }));
+            loadParameters = JSON.parse(
+              fs.readFileSync(parameterFilePath, { encoding: "utf8" })
+            );
           }
         } catch (error) {}
       }
@@ -96,15 +124,36 @@ const EggShell = (app, options = {}) => {
 
     for (const pName of propertyNames) {
       // 解析函数元数据
-      let { reqMethod, path, before, after, message, ignoreJwt, tags, summary, description, parameters, responses, produces, consumes, hidden, tokenType, render } = methodHandler.getMetada(c[pName]);
-      const befores = [ ...options.before, ...beforeAll, ...before ];
-      const afters = [ ...options.after, ...afterAll, ...after ];
+      let {
+        reqMethod,
+        path,
+        before,
+        after,
+        message,
+        ignoreJwt,
+        tags,
+        summary,
+        description,
+        parameters,
+        responses,
+        produces,
+        consumes,
+        hidden,
+        tokenType,
+        render,
+      } = methodHandler.getMetada(c[pName]);
+      const befores = [...options.before, ...beforeAll, ...before];
+      const afters = [...options.after, ...afterAll, ...after];
 
       if (swaggerOpt && swaggerOpt.open && !hiddenAll && !hidden) {
         let finallyPath = prefix + path;
         finallyPath = replaceColon(finallyPath);
 
-        if (loadParameters && loadParameters[path] && loadParameters[path][reqMethod]) {
+        if (
+          loadParameters &&
+          loadParameters[path] &&
+          loadParameters[path][reqMethod]
+        ) {
           const curRoute = loadParameters[path][reqMethod];
           if ((!tags || tags.length === 0) && curRoute.tags) {
             tags = curRoute.tags;
@@ -129,7 +178,12 @@ const EggShell = (app, options = {}) => {
           }
         }
 
-        if (!_.isEmpty(swaggerOpt.tokenOpt) && jwt && !ignoreJwtAll && !ignoreJwt) {
+        if (
+          !_.isEmpty(swaggerOpt.tokenOpt) &&
+          jwt &&
+          !ignoreJwtAll &&
+          !ignoreJwt
+        ) {
           const tokenOpt = swaggerOpt.tokenOpt;
           let token = null;
           if (!_.isEmpty(tokenOpt.tokens)) {
@@ -137,11 +191,21 @@ const EggShell = (app, options = {}) => {
             let partTokenType = null;
             if (loadParameters) {
               globalTokenType = loadParameters.tokenType || null;
-              if (loadParameters[path] && loadParameters[path][reqMethod] && loadParameters[path][reqMethod].tokenType) {
-                partTokenType = loadParameters[path][reqMethod].tokenType || null;
+              if (
+                loadParameters[path] &&
+                loadParameters[path][reqMethod] &&
+                loadParameters[path][reqMethod].tokenType
+              ) {
+                partTokenType =
+                  loadParameters[path][reqMethod].tokenType || null;
               }
             }
-            let defaultTokenType = tokenType || tokenTypeAll || tokenOpt.defaultTokenType || partTokenType || globalTokenType;
+            let defaultTokenType =
+              tokenType ||
+              tokenTypeAll ||
+              tokenOpt.defaultTokenType ||
+              partTokenType ||
+              globalTokenType;
             if (!defaultTokenType) {
               defaultTokenType = Object.keys(tokenOpt.tokens)[0];
             }
@@ -151,7 +215,11 @@ const EggShell = (app, options = {}) => {
           }
           if (token) {
             parameters.unshift({
-              name: 'Authorization', in: 'header', description: 'Token', type: 'string', defaultValue: 'Bearer ' + token
+              name: "Authorization",
+              in: "header",
+              description: "Token",
+              type: "string",
+              defaultValue: "Bearer " + token,
             });
           }
         }
@@ -161,13 +229,15 @@ const EggShell = (app, options = {}) => {
             swaggerJson.paths[finallyPath] = {};
           }
           swaggerJson.paths[finallyPath][reqMethod] = {
-            tags: ((tags && !Array.isArray(tags)) ? [ tags ] : tags) || [ prefix ],
+            tags: (tags && !Array.isArray(tags) ? [tags] : tags) || [prefix],
             summary: summary || description,
             description,
-            produces: (produces && !Array.isArray(produces)) ? [ produces ] : produces,
-            consumes: (consumes && !Array.isArray(consumes)) ? [ consumes ] : consumes,
+            produces:
+              produces && !Array.isArray(produces) ? [produces] : produces,
+            consumes:
+              consumes && !Array.isArray(consumes) ? [consumes] : consumes,
             parameters,
-            responses
+            responses,
           };
         }
       }
@@ -183,6 +253,22 @@ const EggShell = (app, options = {}) => {
           }
           ctx.body = ctx.request ? ctx.request.body : null;
           const result = await instance[pName](ctx);
+
+          const params = Reflect.getMetadata(PARAM_INFO, instance, pName);
+
+          instance[pName].apply(
+            instance,
+            params.map((param) => {
+              if (!param) return undefined;
+              switch (param.extract) {
+                case BODY:
+                  return ctx.request.body;
+                default:
+                  return undefined;
+              }
+            })
+          );
+
           if (options.quickStart && !render && !renderController) {
             ctx.response.body = {
               success: true,
@@ -190,7 +276,7 @@ const EggShell = (app, options = {}) => {
               data: result,
             };
           } else if (renderController || render) {
-            ctx.set('Content-Type', 'text/html;charset=utf-8');
+            ctx.set("Content-Type", "text/html;charset=utf-8");
           }
           for (const after of afters) {
             await after()(ctx, next);
@@ -204,34 +290,47 @@ const EggShell = (app, options = {}) => {
     }
   }
 
-  if (swaggerOpt && swaggerOpt.open && swaggerOpt.paths && swaggerOpt.paths.outPath) {
-    const outPath = nodePath.join(__dirname, nodePath.normalize('../../' + swaggerOpt.paths.outPath));
+  if (
+    swaggerOpt &&
+    swaggerOpt.open &&
+    swaggerOpt.paths &&
+    swaggerOpt.paths.outPath
+  ) {
+    const outPath = nodePath.join(
+      __dirname,
+      nodePath.normalize("../../" + swaggerOpt.paths.outPath)
+    );
     const stat = fs.statSync(outPath);
     if (stat) {
-      fs.writeFileSync(outPath, JSON.stringify(swaggerJson), { encoding: 'utf8' });
+      fs.writeFileSync(outPath, JSON.stringify(swaggerJson), {
+        encoding: "utf8",
+      });
     }
   }
 };
 
 const paramsRegex = /:[\w-]*/g;
-function replaceColon (path) {
+function replaceColon(path) {
   const matchs = paramsRegex.exec(path);
   if (!matchs) return path;
-  const pathItem = matchs[0].replace(':', '{') + '}';
+  const pathItem = matchs[0].replace(":", "{") + "}";
   path = path.replace(matchs[0], pathItem);
   return replaceColon(path);
 }
 
-function getDefinition (definitions, definitionPath) {
-  const files = fs.readdirSync(definitionPath, { encoding: 'utf8' });
+function getDefinition(definitions, definitionPath) {
+  const files = fs.readdirSync(definitionPath, { encoding: "utf8" });
   for (const file of files) {
     const subDefinitionPath = nodePath.join(definitionPath, file);
     const stat = fs.statSync(subDefinitionPath);
     if (stat.isFile()) {
-      const data = fs.readFileSync(subDefinitionPath, { encoding: 'utf8' });
+      const data = fs.readFileSync(subDefinitionPath, { encoding: "utf8" });
       definitions = Object.assign(definitions, JSON.parse(data));
     } else if (stat.isDirectory()) {
-      definitions = Object.assign(definitions, this._getDefinition(definitions, subDefinitionPath));
+      definitions = Object.assign(
+        definitions,
+        this._getDefinition(definitions, subDefinitionPath)
+      );
     }
   }
   return definitions;
@@ -272,5 +371,5 @@ module.exports = {
   TagsAll: ctHandler.tagsAll(),
   HiddenAll: ctHandler.hiddenAll(),
   TokenTypeAll: ctHandler.tokenTypeAll(),
-  RenderController: ctHandler.renderController()
+  RenderController: ctHandler.renderController(),
 };
