@@ -1,13 +1,15 @@
 import { Controller } from 'egg';
-import { Post, IgnoreJwtAll, TagsAll } from 'egg-shell-decorators';
+import { Get, Middleware } from 'egg-shell-decorators';
+import Middleware01 from '../middleware/middleware-01';
+import Middleware02 from '../middleware/middleware-02';
+import Middleware03 from '../middleware/middleware-03';
 
-@TagsAll('用户')
-@IgnoreJwtAll
 export default class UserController extends Controller {
 
-  @Post('/')
-  public listUser({ body: { name, phone, age } }) {
-    return { name, phone, age };
+  @Get('/')
+  @Middleware([ Middleware01(), Middleware02(), Middleware03() ])
+  public getUser() {
+    this.ctx.body = { name: 'super2god' };
   }
 
 }

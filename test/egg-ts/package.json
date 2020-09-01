@@ -5,7 +5,8 @@
     "typescript": true
   },
   "scripts": {
-    "dev": "egg-bin dev -r egg-ts-helper/register"
+    "dev": "egg-bin dev -r egg-ts-helper/register",
+    "install": "ln -nsf ../../../ node_modules/egg-shell-decorators"
   },
   "dependencies": {
     "egg": "^2.6.1",
