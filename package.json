@@ -1,9 +1,9 @@
 {
-  "name": "egg-shell-decorators",
-  "version": "1.0.7",
+  "name": "egg-shell-decorators-plus",
+  "version": "0.1.0",
   "main": "index.js",
-  "repository": "https://github.com/super2god/egg-shell-decorators.git",
-  "author": "super2god <910147606@qq.com>",
+  "repository": "git@github.com:serializedowen/egg-shell-decorators.git",
+  "author": "@serializedowen",
   "license": "MIT",
   "scripts": {
     "test-simple": "cd test/egg-simple && yarn run dev",
