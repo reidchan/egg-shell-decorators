@@ -1,7 +1,7 @@
 <img width="100" src="https://super-github.oss-cn-shenzhen.aliyuncs.com/package/egg-shell-decorators.png"/>
 
 <p>
-  <img src="https://img.shields.io/badge/version-1.5.0-ff69b4.svg"/>
+  <img src="https://img.shields.io/badge/version-1.6.0-ff69b4.svg"/>
   <img src="https://img.shields.io/packagist/l/doctrine/orm.svg"/>
 </p>
 
@@ -27,6 +27,8 @@ export default class UserController extends Controller {
 # 版本
 | 版本 | 文档 | 上线时间 |
 | ---- | ---- | ----  |
+| v1.6.0 | [点击跳转](https://www.yuque.com/super2god/open-source/egg-shell-decorators-v1.6.0) | 2020-11-05 |
+| v1.6.0-beta | [点击跳转](https://www.yuque.com/super2god/open-source/egg-shell-decorators-v1.6.0-beta) | 2020-09-10 |
 | v1.5.0 | [点击跳转](https://www.yuque.com/super2god/open-source/egg-shell-decorators-v1.5.0) | 2020-07-28 |
 | v1.5.0-beta | [点击跳转](https://www.yuque.com/super2god/open-source/egg-shell-decorators-v1.5.0-beta) | 2020-07-13 |
 | v1.0.7 | [点击跳转](https://www.yuque.com/super2god/open-source/egg-shell-decorators-v1.0.7) | 2018-12-29 |
