@@ -59,6 +59,10 @@ class MethodHandler {
     return this[createMappingDecorator](RequestMethod.HEAD);
   }
 
+  all () {
+    return this[createMappingDecorator](RequestMethod.ALL);
+  }
+
   [createMappingDecorator] (method) {
     return path => {
       return this[mappingRequest]({

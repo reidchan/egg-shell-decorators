@@ -49,6 +49,7 @@ module.exports = {
   EggShell,
 
   Get: methodHandler.get(),
+  All: methodHandler.all(),
   Post: methodHandler.post(),
   Put: methodHandler.put(),
   Delete: methodHandler.delete(),
