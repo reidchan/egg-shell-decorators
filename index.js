@@ -31,16 +31,17 @@ const EggShell = app => {
     for (const pName of propertyNames) {
       // 解析函数元数据
       const { reqMethod, path, middlewares } = methodHandler.getMetada(c[pName]);
-
-      const routerCb = async ctx => {
-        const instance = new c.constructor(ctx);
-        try {
-          await instance[pName](ctx);
-        } catch (error) {
-          throw error;
-        }
-      };
-      router[reqMethod](prefix + path, ...middlewares, routerCb);
+      if (reqMethod) {
+        const routerCb = async ctx => {
+          const instance = new c.constructor(ctx);
+          try {
+            await instance[pName](ctx);
+          } catch (error) {
+            throw error;
+          }
+        };
+        router[reqMethod](prefix + path, ...middlewares, routerCb);
+      }
     }
   }
 };
