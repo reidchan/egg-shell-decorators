@@ -8,4 +8,5 @@ module.exports = {
   PATCH: 'patch',
   OPTIONS: 'options',
   HEAD: 'head',
+  ALL: 'all',
 };

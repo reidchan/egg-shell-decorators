@@ -1,22 +1,9 @@
 'use strict';
 
 const {
+  MIDDLEWARE_METADATA,
   METHOD_METADATA,
-  PATH_METADATA,
-  BEFORE_METADATA,
-  AFTER_METADATA,
-  MESSAGE_METADATA,
-  IGNORE_JWT_METADATA,
-  TAGS_METADATA,
-  SUMMARY_METADATA,
-  DESCRIPTION_METADATA,
-  PARAMETERS_METADATA,
-  RESPONSES_METADATA,
-  PRODUCES_METADATA,
-  CONSUMES_METADATA,
-  HIDDEN_METADATA,
-  TOKEN_TYPE_METADATA,
-  RENDER_METADATA } = require('../constants');
+  PATH_METADATA } = require('../constants');
 const RequestMethod = require('../enum/request-method');
 
 const createMappingDecorator = Symbol('createMappingDecorator');
@@ -30,40 +17,18 @@ class MethodHandler {
   }
 
   getMetada (targetCb) {
+    const middlewares = Reflect.getMetadata(MIDDLEWARE_METADATA, targetCb) || [];
     const reqMethod = Reflect.getMetadata(METHOD_METADATA, targetCb);
     const path = Reflect.getMetadata(PATH_METADATA, targetCb);
-    const before = Reflect.getMetadata(BEFORE_METADATA, targetCb) || [];
-    const after = Reflect.getMetadata(AFTER_METADATA, targetCb) || [];
-    const message = Reflect.getMetadata(MESSAGE_METADATA, targetCb);
-    const ignoreJwt = Reflect.getMetadata(IGNORE_JWT_METADATA, targetCb);
-    const parameters = Reflect.getMetadata(PARAMETERS_METADATA, targetCb) || [];
-    const responses = Reflect.getMetadata(RESPONSES_METADATA, targetCb);
-    const tags = Reflect.getMetadata(TAGS_METADATA, targetCb);
-    const summary = Reflect.getMetadata(SUMMARY_METADATA, targetCb);
-    const description = Reflect.getMetadata(DESCRIPTION_METADATA, targetCb);
-    const produces = Reflect.getMetadata(PRODUCES_METADATA, targetCb) || [ 'application/json' ];
-    const consumes = Reflect.getMetadata(CONSUMES_METADATA, targetCb) || [ 'application/json' ];
-    const hidden = Reflect.getMetadata(HIDDEN_METADATA, targetCb);
-    const tokenType = Reflect.getMetadata(TOKEN_TYPE_METADATA, targetCb);
-    const render = Reflect.getMetadata(RENDER_METADATA, targetCb);
     return {
+      middlewares,
       reqMethod,
-      path,
-      before,
-      after,
-      message,
-      ignoreJwt,
-      parameters,
-      responses,
-      tags,
-      summary,
-      description,
-      produces,
-      consumes,
-      hidden,
-      tokenType,
-      render
+      path
     };
+  }
+
+  middleware () {
+    return this[createArrayDecorator](MIDDLEWARE_METADATA);
   }
 
   get () {
@@ -94,60 +59,8 @@ class MethodHandler {
     return this[createMappingDecorator](RequestMethod.HEAD);
   }
 
-  before () {
-    return this[createArrayDecorator](BEFORE_METADATA);
-  }
-
-  after () {
-    return this[createArrayDecorator](AFTER_METADATA);
-  }
-
-  message () {
-    return this[createSingleDecorator](MESSAGE_METADATA);
-  }
-
-  ignoreJwt () {
-    return this[createSingleDecorator](IGNORE_JWT_METADATA)(true);
-  }
-
-  tags () {
-    return this[createArrayDecorator](TAGS_METADATA);
-  }
-
-  summary () {
-    return this[createSingleDecorator](SUMMARY_METADATA);
-  }
-
-  description () {
-    return this[createSingleDecorator](DESCRIPTION_METADATA);
-  }
-
-  parameters () {
-    return this[createArrayDecorator](PARAMETERS_METADATA);
-  }
-
-  responses () {
-    return this[createSingleDecorator](RESPONSES_METADATA);
-  }
-
-  produces () {
-    return this[createArrayDecorator](PRODUCES_METADATA);
-  }
-
-  consumes () {
-    return this[createArrayDecorator](CONSUMES_METADATA);
-  }
-
-  hidden () {
-    return this[createSingleDecorator](HIDDEN_METADATA)(true);
-  }
-
-  tokenType () {
-    return this[createSingleDecorator](TOKEN_TYPE_METADATA);
-  }
-
-  render () {
-    return this[createSingleDecorator](RENDER_METADATA)(true);
+  all () {
+    return this[createMappingDecorator](RequestMethod.ALL);
   }
 
   [createMappingDecorator] (method) {
@@ -184,7 +97,7 @@ class MethodHandler {
   [createArrayDecorator] (metadata) {
     return values => {
       return (target, key, descriptor) => {
-        const _values = Reflect.getMetadata(metadata, descriptor.value) || [];
+        const _values = Reflect.getOwnMetadata(metadata, descriptor.value) || [];
         values = (values instanceof Array) ? values : [ values ];
         values = values.concat(_values);
         Reflect.defineMetadata(metadata, values, descriptor.value);
